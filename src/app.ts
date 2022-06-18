@@ -18,6 +18,7 @@ app.use(
     origin: 'https://doorstep-services-website-liard.vercel.app',
     preflightContinue: true,
     credentials: true,
+    optionsSuccessStatus: 204,
   })
 );
 
