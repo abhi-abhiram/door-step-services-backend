@@ -2,6 +2,7 @@ import express from 'express';
 import cookieparser from 'cookie-parser';
 import bodyParser from 'body-parser';
 import { IncomingMessage } from 'http';
+import cors from 'cors';
 import { common, professional, admin, user } from './routes';
 import errorHandlerMiddleware from './middleware/errorHandlerMiddleware';
 import swaggerDocs from './utils/swagger';
@@ -11,6 +12,13 @@ const app = express();
 interface CustomIncomingMsg extends IncomingMessage {
   rawBody: Buffer;
 }
+
+app.use(
+  cors({
+    origin: '*',
+    optionsSuccessStatus: 204,
+  })
+);
 
 app.use(
   express.json({
