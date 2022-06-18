@@ -17,6 +17,7 @@ app.use(
   cors({
     origin: 'https://doorstep-services-website-liard.vercel.app',
     preflightContinue: true,
+    credentials: true,
   })
 );
 
