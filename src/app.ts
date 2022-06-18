@@ -15,8 +15,7 @@ interface CustomIncomingMsg extends IncomingMessage {
 
 app.use(
   cors({
-    origin: 'https://doorstep-services-website-liard.vercel.app/',
-    optionsSuccessStatus: 204,
+    origin: 'https://doorstep-services-website-liard.vercel.app',
   })
 );
 
