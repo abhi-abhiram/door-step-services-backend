@@ -6,12 +6,12 @@
  *      type: object
  *      required:
  *        - customerEmail
- *        - serviceId
+ *        - serviceName
  *      properties:
  *        customerEmail:
  *          type: string
  *          default: jane.doe@example.com
- *        serviceId:
+ *        serviceName:
  *          type: string
- *          default: 629cb4fe3165b29eea83e0b8
+ *          default: hair cut
  */

@@ -4,11 +4,7 @@ const serviceSchema = new mongoose.Schema({
   name: {
     type: String,
     required: true,
-  },
-  professional: {
-    type: mongoose.Types.ObjectId,
-    ref: 'User',
-    required: true,
+    unique: true,
   },
   price: {
     type: Number,

@@ -1,5 +1,8 @@
 import express from 'express';
-import createCheckout, { createOrder } from '../controllers/userController';
+import createCheckout, {
+  createOrder,
+  getPendingOrders,
+} from '../controllers/userController';
 import { isAuthenticatedUser, authorizeRoles } from '../middleware/auth';
 import { Roles } from '../models/userModel';
 
@@ -24,4 +27,19 @@ router
   .post(isAuthenticatedUser, authorizeRoles(Roles.USER), createCheckout);
 
 router.route('/createOrder').post(createOrder);
+
+/**
+ * @openapi
+ '/api/user/getPendingOrders':
+   *  get:
+   *     tags:
+   *     - User
+   *     summary: get all pending orders
+   *     responses:
+   *      200:
+   *        description: nothing
+   */
+router
+  .route('/getPendingOrders')
+  .get(isAuthenticatedUser, authorizeRoles(Roles.USER), getPendingOrders);
 export default router;

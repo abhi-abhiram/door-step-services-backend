@@ -20,6 +20,12 @@ const orderSchema = new mongoose.Schema({
     required: true,
   },
 
+  professional: {
+    type: mongoose.Types.ObjectId,
+    ref: 'User',
+    required: true,
+  },
+
   user: {
     type: mongoose.Types.ObjectId,
     ref: 'User',
