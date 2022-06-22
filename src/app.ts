@@ -13,14 +13,14 @@ interface CustomIncomingMsg extends IncomingMessage {
   rawBody: Buffer;
 }
 
-// app.use(
-//   cors({
-//     origin: 'https://doorstep-services-website-liard.vercel.app',
-//     preflightContinue: true,
-//     credentials: true,
-//     optionsSuccessStatus: 204,
-//   })
-// );
+app.use(
+  cors({
+    origin: 'https://doorstep-services-website-liard.vercel.app',
+    preflightContinue: true,
+    credentials: true,
+    optionsSuccessStatus: 204,
+  })
+);
 
 app.use(
   express.json({
