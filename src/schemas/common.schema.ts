@@ -59,4 +59,40 @@
  *          type: string
  *          default: "stringPassword123"
  *    logout:
+ *    createCheckout:
+ *      type: object
+ *      required:
+ *        - fullName
+ *        - email
+ *        - phoneNumber
+ *        - serviceDate
+ *        - address
+ *        - city
+ *        - note
+ *        - serviceName
+ *      properties:
+ *        fullName:
+ *          type: string
+ *          default: jane.doe
+ *        email:
+ *          type: string
+ *          default: 406223@gmail.com
+ *        serviceName:
+ *          type: string
+ *          default: barber
+ *        serviceDate:
+ *           type: string
+ *           default: 2022-08-12
+ *        address:
+ *           type: string
+ *           default: faffasdf
+ *        city:
+ *           type: string
+ *           default: NYC
+ *        note:
+ *           type: string
+ *           default: dklfjasd;lkfjkdslj
+ *        phoneNumber:
+ *           type: string
+ *           default: 43412314
  */

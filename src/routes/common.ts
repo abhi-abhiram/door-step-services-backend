@@ -3,9 +3,9 @@ import {
   logout,
   loginClient,
   registerClient,
-  addAddress,
+  createCheckout,
+  createOrder,
 } from '../controllers/commonController';
-import { isAuthenticatedUser } from '../middleware/auth';
 
 const router = express.Router();
 
@@ -29,25 +29,6 @@ const router = express.Router();
    *        description: values already exists
    */
 router.route('/register').post(registerClient);
-
-/**
- * @openapi
- '/api/addAddress':
-   *  post:
-   *     tags:
-   *     - Client
-   *     summary: Add address for a client
-   *     requestBody:
-   *      required: true
-   *      content:
-   *        application/json:
-   *           schema:
-   *              $ref: '#/components/schemas/addAddress'
-   *     responses:
-   *      201:
-   *        description: address added successfully
-   */
-router.route('/addAddress').post(isAuthenticatedUser, addAddress);
 
 /**
  * @openapi
@@ -81,4 +62,21 @@ router.route('/login').post(loginClient);
    */
 router.route('/logout').get(logout);
 
+/**
+ * @openapi
+ '/api/createCheckout':
+   *  post:
+   *     tags:
+   *     - Client
+   *     summary: create a checkout page
+   *     requestBody:
+   *      required: true
+   *      content:
+   *        application/json:
+   *           schema:
+   *              $ref: '#/components/schemas/createCheckout'
+   */
+router.route('/createCheckout').post(createCheckout);
+
+router.route('/createOrder').post(createOrder);
 export default router;

@@ -1,4 +1,4 @@
-import mongoose from 'mongoose';
+import mongoose, { Document, Types, Model } from 'mongoose';
 
 export enum OrderStatus {
   DELIVERED = 'delivered',
@@ -13,22 +13,56 @@ export enum PaymentStatus {
   PROCESSING = 'processing',
 }
 
-const orderSchema = new mongoose.Schema({
-  service: {
-    type: mongoose.Types.ObjectId,
-    ref: 'Service',
-    required: true,
-  },
+interface Order {
+  fullName: string;
+  email: string;
+  address: string;
+  phoneNumber: string;
+  serviceDate: Date;
+  city: string;
+  professional: string;
+  serviceId: string;
+  paymentInfo: {
+    id: string;
+    status: PaymentStatus;
+  };
+  paidAt: Date;
+  totalPrice: number;
+  orderStatus: string;
+  deliveredAt: Date;
+  createdAt: Date;
+  note: string;
+}
 
+export type OrderModel = Model<Order>;
+
+const OrderSchema = new mongoose.Schema({
+  fullName: {
+    type: String,
+    required: [true, 'Full Name is required'],
+  },
+  email: {
+    type: String,
+    required: [true, 'Email is required'],
+  },
+  address: {
+    type: String,
+    required: [true, 'Address is required'],
+  },
+  phoneNumber: {
+    type: String,
+    required: [true, 'Phone number is required'],
+  },
+  serviceDate: {
+    type: Date,
+    required: [true, 'Date is required'],
+  },
+  city: {
+    type: String,
+    required: [true, 'City is required'],
+  },
   professional: {
-    type: mongoose.Types.ObjectId,
-    ref: 'User',
-    required: true,
-  },
-
-  user: {
-    type: mongoose.Types.ObjectId,
-    ref: 'User',
+    type: String,
     required: true,
   },
   paymentInfo: {
@@ -43,7 +77,6 @@ const orderSchema = new mongoose.Schema({
   },
   paidAt: {
     type: Date,
-    required: true,
   },
   totalPrice: {
     type: Number,
@@ -58,8 +91,20 @@ const orderSchema = new mongoose.Schema({
   deliveredAt: Date,
   createdAt: {
     type: Date,
-    default: Date.now,
+    default: Date.now(),
+  },
+  note: {
+    type: String,
+  },
+  serviceId: {
+    type: String,
+    required: true,
   },
 });
 
-export default mongoose.model('Order', orderSchema);
+export default mongoose.model<Order, OrderModel>('order', OrderSchema);
+
+export type OrderObj = Document<unknown, unknown, Order> &
+  Order & {
+    _id: Types.ObjectId;
+  };

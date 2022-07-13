@@ -1,27 +1,31 @@
-import mongoose from 'mongoose';
+import mongoose, { Model, Document, Types } from 'mongoose';
 
-const serviceSchema = new mongoose.Schema({
+export interface Service {
+  name: string;
+  active: boolean;
+  price: number;
+}
+
+export type ServiceModel = Model<Service>;
+
+const ServiceSchema = new mongoose.Schema<Service, ServiceModel>({
   name: {
     type: String,
-    required: true,
-    unique: true,
+    required: [true, 'Name is required'],
+  },
+  active: {
+    type: Boolean,
+    required: [true, 'Acitive field is required'],
   },
   price: {
     type: Number,
-    required: true,
-  },
-  location: {
-    type: String,
-    required: true,
-  },
-  description: {
-    type: String,
-    required: true,
-  },
-  createdAt: {
-    type: Date,
-    default: Date.now,
+    required: [true, 'Price is required'],
   },
 });
 
-export default mongoose.model('Serivce', serviceSchema);
+export default mongoose.model<Service, ServiceModel>('Service', ServiceSchema);
+
+export type ServiceObj = Document<unknown, unknown, Service> &
+  Service & {
+    _id: Types.ObjectId;
+  };

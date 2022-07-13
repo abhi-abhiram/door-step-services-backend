@@ -3,7 +3,7 @@ import cookieparser from 'cookie-parser';
 import bodyParser from 'body-parser';
 import { IncomingMessage } from 'http';
 import cors from 'cors';
-import { common, professional, admin, user } from './routes';
+import { common, professional, admin } from './routes';
 import errorHandlerMiddleware from './middleware/errorHandlerMiddleware';
 import swaggerDocs from './utils/swagger';
 
@@ -34,7 +34,6 @@ app.use(cookieparser());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 swaggerDocs(app);
-app.use('/api/user', user);
 app.use('/api/professional', professional);
 app.use('/api/', common);
 app.use('/api/admin', admin);

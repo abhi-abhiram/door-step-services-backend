@@ -10,20 +10,29 @@ export enum Roles {
   ADMIN = 'admin',
 }
 
+export enum PROFESSIONALStatus {
+  NOORDERS = 'noorder',
+  ONWORK = 'onwork',
+}
+
 export interface User {
-  name: string;
+  fullName: string;
+  username: string;
   email: string;
   phoneNo: string;
   password: string;
   role: Roles;
+  serviceName: string;
   createdAt: Date;
   resetPasswordToken: string;
   resetPasswordExpire: Date;
+  location: string;
   address: string;
   city: string;
   state: string;
   country: string;
   pinCode: number;
+  professionalStatus: PROFESSIONALStatus;
 }
 
 export interface UserMethods {
@@ -36,11 +45,18 @@ export interface UserMethods {
 export type UserModel = Model<User, {}, UserMethods>;
 
 const userSchema = new mongoose.Schema<User, UserModel, UserMethods>({
-  name: {
+  fullName: {
     type: String,
     required: [true, 'Please Enter Your Name'],
     maxLength: [30, 'Name cannot exceed 30 characters'],
     minLength: [4, 'Name should have more than 4 characters'],
+  },
+  username: {
+    type: String,
+    required: [true, 'Please Enter Your Name'],
+    maxLength: [30, 'Name cannot exceed 30 characters'],
+    minLength: [4, 'Name should have more than 4 characters'],
+    unique: true,
   },
   email: {
     type: String,
@@ -59,6 +75,12 @@ const userSchema = new mongoose.Schema<User, UserModel, UserMethods>({
     required: [true, 'Please Enter Your Password'],
     minLength: [8, 'Password should be greater than 8 characters'],
     select: false,
+  },
+  location: {
+    type: String,
+  },
+  serviceName: {
+    type: String,
   },
   role: {
     type: String,
@@ -85,7 +107,10 @@ const userSchema = new mongoose.Schema<User, UserModel, UserMethods>({
   pinCode: {
     type: Number,
   },
-
+  professionalStatus: {
+    type: String,
+    default: PROFESSIONALStatus.NOORDERS,
+  },
   resetPasswordToken: String,
   resetPasswordExpire: Date,
 });
