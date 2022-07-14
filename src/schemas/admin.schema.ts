@@ -24,7 +24,7 @@
  *          default: someemail@gmail.com
  *        serviceName:
  *          type: string
- *          default:  Barber
+ *          default: barber
  *        location:
  *          type: string
  *          default: NYC
@@ -74,4 +74,12 @@
  *        price:
  *          type: int
  *          default: 2322
+ *    makeOrderComplete:
+ *      type: object
+ *      required:
+ *        - orderId
+ *      properties:
+ *        orderId:
+ *          type: string
+ *          default: 62cef883248a8bb14e138cbb
  */

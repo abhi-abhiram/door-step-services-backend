@@ -4,9 +4,7 @@ import dotenv from 'dotenv';
 dotenv.config();
 
 const transporter = nodemailer.createTransport({
-  host: process.env.HOST,
-  port: parseInt(process.env.PORTEMAIL as string, 10),
-  secure: false,
+  service: process.env.SERVICE,
   auth: {
     user: process.env.EMAIL,
     pass: process.env.PASS,
@@ -18,7 +16,7 @@ async function sendMail(message: string, to: string) {
     from: process.env.EMAIL,
     to,
     subject: 'Order placed',
-    text: message,
+    html: message,
   });
 
   transporter.sendMail(info, (error) => {

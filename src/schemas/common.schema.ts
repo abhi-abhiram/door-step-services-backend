@@ -19,13 +19,13 @@
  *          default: ja_jon
  *        email:
  *          type: string
- *          default: someemail@gmail.com
+ *          default: jane.doe@example.com
  *        phone:
  *          type: string
  *          default: 3251239938
  *        password:
  *          type: string
- *          default: 1234567890
+ *          default: stringPassword123
  *    addAddress:
  *      type: object
  *      required:

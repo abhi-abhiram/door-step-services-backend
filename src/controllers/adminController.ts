@@ -2,7 +2,11 @@ import { NextFunction, Request, Response } from 'express';
 import catchAsyncErrors from '../middleware/catchAsyncErrors';
 import OrderModel, { OrderStatus } from '../models/orderModel';
 import ServiceModel, { Service } from '../models/serviceModel';
-import UserModel, { Roles, UserObj } from '../models/userModel';
+import UserModel, {
+  PROFESSIONALStatus,
+  Roles,
+  UserObj,
+} from '../models/userModel';
 import ErrorHander from '../utils/errorHandler';
 
 interface CustomRequest<T> extends Request {
@@ -105,6 +109,27 @@ export const getPendingOrders = catchAsyncErrors(
   async (req: PendingOrderReq, res: Response) => {
     const orders = await OrderModel.find({ orderStatus: OrderStatus.ARRIVING });
     return res.json({ success: true, orders });
+  }
+);
+
+export const makeOrderComplete = catchAsyncErrors(
+  async (
+    req: CustomRequest<{ orderId: string }>,
+    res: Response,
+    next: NextFunction
+  ) => {
+    const order = await OrderModel.findById(req.body.orderId);
+
+    if (order) {
+      order.orderStatus = OrderStatus.DELIVERED;
+      const professional = await UserModel.findById(order.professional);
+      if (professional) {
+        professional.professionalStatus = PROFESSIONALStatus.NOORDERS;
+        await professional.save();
+      }
+    } else return next(new ErrorHander('Order not found', 400));
+    await order.save();
+    return res.status(201).json({ success: true, message: 'Success' });
   }
 );
 

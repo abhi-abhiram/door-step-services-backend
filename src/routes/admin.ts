@@ -4,6 +4,7 @@ import {
   createProfessional,
   createService,
   getPendingOrders,
+  makeOrderComplete,
 } from '../controllers/adminController';
 import { isAuthenticatedUser, authorizeRoles } from '../middleware/auth';
 import { Roles } from '../models/userModel';
@@ -87,5 +88,26 @@ router
 router
   .route('/getPendingOrders')
   .get(isAuthenticatedUser, authorizeRoles(Roles.ADMIN), getPendingOrders);
+
+/**
+ * @openapi
+ '/api/admin/makeOrderComplete':
+   *  post:
+   *     tags:
+   *     - Admin
+   *     summary: Make Order complete
+   *     requestBody:
+   *      required: true
+   *      content:
+   *        application/json:
+   *           schema:
+   *              $ref: '#/components/schemas/makeOrderComplete'
+   *     responses:
+   *      201:
+   *        description: success
+   */
+router
+  .route('/makeOrderComplete')
+  .post(isAuthenticatedUser, authorizeRoles(Roles.ADMIN), makeOrderComplete);
 
 export default router;

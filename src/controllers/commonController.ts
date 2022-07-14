@@ -1,7 +1,7 @@
 import { NextFunction, Request, Response } from 'express';
 import Stripe from 'stripe';
 import catchAsyncErrors from '../middleware/catchAsyncErrors';
-import UserModel, { PROFESSIONALStatus } from '../models/userModel';
+import UserModel, { PROFESSIONALStatus, Roles } from '../models/userModel';
 import ErrorHander from '../utils/errorHandler';
 import sendToken from '../utils/jwtToken';
 import createStripeObj from '../utils/stripe';
@@ -119,6 +119,7 @@ export const createCheckout = catchAsyncErrors(
 
     try {
       const professional = await UserModel.findOne({
+        role: Roles.PROFESSIONAL,
         professionalStatus: PROFESSIONALStatus.NOORDERS,
         location: req.body.city,
       });
@@ -207,13 +208,14 @@ export const createOrder = catchAsyncErrors(
         await order?.save();
         if (order?.email) {
           await sendMail(
-            `Order has placed by user ${order?.fullName} \n 
-        city: ${order?.city} \n
-        Address: ${order?.address} \n
-        \n
-        Open below url to accept the order 
-        
-        ${process.env.CLIENT_URL}/professional/order/${order.id}
+            `<h2>Order has placed by user ${order?.fullName}</h2> \n  
+            <ul>
+             <li>City: ${order?.city}</li>
+             <li>Address: ${order?.address}</li>
+             <li>Email: ${order?.email}</li>
+             <li>Phone: ${order?.phoneNumber}</li>
+             <li>Order Date: ${order?.serviceDate}</li>
+            </ul>
         `,
             professional?.email as string
           ).catch((error) => console.log(error));
