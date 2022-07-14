@@ -48,6 +48,37 @@ export const createProfessional = catchAsyncErrors(
   }
 );
 
+interface AdminBody {
+  username: string;
+  fullName: string;
+  email: string;
+  password: string;
+  phone: string;
+}
+
+export const createAdmin = catchAsyncErrors(
+  async (req: CustomRequest<AdminBody>, res: Response, next: NextFunction) => {
+    const user = new UserModel({
+      fullName: req.body.fullName,
+      email: req.body.email,
+      username: req.body.username,
+      phoneNo: req.body.phone,
+      role: Roles.ADMIN,
+      password: req.body.password,
+    });
+
+    try {
+      await user.save();
+      return res.status(201).json({
+        success: true,
+        messages: 'New Admin added to database',
+      });
+    } catch (error) {
+      return next(new ErrorHander(error as string, 409));
+    }
+  }
+);
+
 export const createService = catchAsyncErrors(
   async (req: CustomRequest<Service>, res: Response, next: NextFunction) => {
     const service = new ServiceModel({

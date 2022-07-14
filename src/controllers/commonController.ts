@@ -58,21 +58,21 @@ export const loginClient = catchAsyncErrors(
   }
 );
 
-interface Register {
+interface UserBody {
+  username: string;
   fullName: string;
   email: string;
   password: string;
-  phoneNo: string;
-  username: string;
+  phone: string;
 }
 
 export const registerClient = catchAsyncErrors(
-  async (req: CustomRequest<Register>, res: Response, next: NextFunction) => {
+  async (req: CustomRequest<UserBody>, res: Response, next: NextFunction) => {
     const user = new UserModel({
       fullName: req.body.fullName,
       username: req.body.username,
       email: req.body.email,
-      phoneNo: req.body.phoneNo,
+      phoneNo: req.body.phone,
       password: req.body.password,
     });
 

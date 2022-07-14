@@ -34,6 +34,30 @@
  *        password:
  *          type: string
  *          default: 1234567890
+ *    createAdmin:
+ *      type: object
+ *      required:
+ *        - email
+ *        - username
+ *        - phone
+ *        - password
+ *        - fullName
+ *      properties:
+ *        username:
+ *          type: string
+ *          default: jane_jon
+ *        fullName:
+ *          type: string
+ *          default: ja_jon
+ *        email:
+ *          type: string
+ *          default: someemail@gmail.com
+ *        phone:
+ *          type: string
+ *          default: 3251239938
+ *        password:
+ *          type: string
+ *          default: 1234567890
  *    createService:
  *      type: object
  *      required:

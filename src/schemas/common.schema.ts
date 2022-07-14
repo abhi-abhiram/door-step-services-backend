@@ -2,24 +2,28 @@
  * @openapi
  * components:
  *  schemas:
- *    Register:
+ *    createUser:
  *      type: object
  *      required:
  *        - email
- *        - name
+ *        - username
+ *        - phone
  *        - password
- *        - phoneNo
+ *        - fullName
  *      properties:
+ *        username:
+ *          type: string
+ *          default: jane_jon
+ *        fullName:
+ *          type: string
+ *          default: ja_jon
  *        email:
  *          type: string
- *          default: jane.doe@example.com
- *        name:
+ *          default: someemail@gmail.com
+ *        phone:
  *          type: string
- *          default: Jane Doe
+ *          default: 3251239938
  *        password:
- *          type: string
- *          default: stringPassword123
- *        phoneNo:
  *          type: string
  *          default: 1234567890
  *    addAddress:

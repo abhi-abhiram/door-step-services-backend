@@ -1,5 +1,6 @@
 import express from 'express';
 import {
+  createAdmin,
   createProfessional,
   createService,
   getPendingOrders,
@@ -29,6 +30,27 @@ const router = express.Router();
 router
   .route('/createProfessional')
   .post(isAuthenticatedUser, authorizeRoles(Roles.ADMIN), createProfessional);
+
+/**
+ * @openapi
+ '/api/admin/createAdmin':
+   *  post:
+   *     tags:
+   *     - Admin
+   *     summary: Create a Admin Account
+   *     requestBody:
+   *      required: true
+   *      content:
+   *        application/json:
+   *           schema:
+   *              $ref: '#/components/schemas/createAdmin'
+   *     responses:
+   *      201:
+   *        description: New Admin added to database
+   */
+router
+  .route('/createAdmin')
+  .post(isAuthenticatedUser, authorizeRoles(Roles.ADMIN), createAdmin);
 
 /**
  * @openapi

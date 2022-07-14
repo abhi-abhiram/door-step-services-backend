@@ -15,16 +15,16 @@ const router = express.Router();
    *  post:
    *     tags:
    *     - Client
-   *     summary: Register a client
+   *     summary: Register a user
    *     requestBody:
    *      required: true
    *      content:
    *        application/json:
    *           schema:
-   *              $ref: '#/components/schemas/Register'
+   *              $ref: '#/components/schemas/createUser'
    *     responses:
    *      201:
-   *        description: client created successfully
+   *        description: User created successfully
    *      409:
    *        description: values already exists
    */
