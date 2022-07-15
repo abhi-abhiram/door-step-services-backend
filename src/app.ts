@@ -14,23 +14,17 @@ interface CustomIncomingMsg extends IncomingMessage {
   rawBody: Buffer;
 }
 
-const allowedOrigins = [
-  'https://doorstep-services-website-liard.vercel.app/',
-  'http://localhost:3000',
-  'https://door-step-services.herokuapp.com/',
-];
-
-const corsOptions = {
-  origin: (origin: any, callback: any) => {
-    if (allowedOrigins.indexOf(origin) !== -1) {
-      callback(null, true);
-    } else {
-      callback(new Error('Not allowed by CORS'));
-    }
-  },
-};
-
-app.use(cors(corsOptions));
+app.use(
+  cors({
+    origin: [
+      'https://doorstep-services-website-liard.vercel.app',
+      'localhost:3000',
+    ],
+    preflightContinue: true,
+    credentials: true,
+    optionsSuccessStatus: 204,
+  })
+);
 
 app.use(
   express.json({
