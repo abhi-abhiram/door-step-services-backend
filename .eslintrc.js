@@ -15,6 +15,7 @@ module.exports = {
   },
   plugins: ['@typescript-eslint', 'import', 'prettier'],
   rules: {
+    'import/prefer-default-export': 'off',
     'prettier/prettier': 'error',
     'no-use-before-define': [
       'error',

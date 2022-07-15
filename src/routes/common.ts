@@ -2,7 +2,6 @@ import express from 'express';
 import {
   logout,
   loginClient,
-  registerClient,
   createCheckout,
   createOrder,
 } from '../controllers/commonController';
@@ -11,31 +10,10 @@ const router = express.Router();
 
 /**
  * @openapi
- '/api/register':
-   *  post:
-   *     tags:
-   *     - Client
-   *     summary: Register a user
-   *     requestBody:
-   *      required: true
-   *      content:
-   *        application/json:
-   *           schema:
-   *              $ref: '#/components/schemas/createUser'
-   *     responses:
-   *      201:
-   *        description: User created successfully
-   *      409:
-   *        description: values already exists
-   */
-router.route('/register').post(registerClient);
-
-/**
- * @openapi
  '/api/login':
    *  post:
    *     tags:
-   *     - Client
+   *     - All
    *     summary: client login
    *     requestBody:
    *      required: true
@@ -54,7 +32,7 @@ router.route('/login').post(loginClient);
  '/api/logout':
    *  get:
    *     tags:
-   *     - Client
+   *     - All
    *     summary: client logout
    *     responses:
    *      200:
@@ -67,7 +45,7 @@ router.route('/logout').get(logout);
  '/api/createCheckout':
    *  post:
    *     tags:
-   *     - Client
+   *     - All
    *     summary: create a checkout page
    *     requestBody:
    *      required: true

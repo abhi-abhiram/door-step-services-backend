@@ -1,36 +1,16 @@
 import express from 'express';
 import {
   createAdmin,
-  createProfessional,
   createService,
   getPendingOrders,
+  getProfessionals,
+  getUsers,
   makeOrderComplete,
 } from '../controllers/adminController';
 import { isAuthenticatedUser, authorizeRoles } from '../middleware/auth';
 import { Roles } from '../models/userModel';
 
 const router = express.Router();
-
-/**
- * @openapi
- '/api/admin/createProfessional':
-   *  post:
-   *     tags:
-   *     - Admin
-   *     summary: Create a professional Account
-   *     requestBody:
-   *      required: true
-   *      content:
-   *        application/json:
-   *           schema:
-   *              $ref: '#/components/schemas/createProfessional'
-   *     responses:
-   *      201:
-   *        description: New Professional added to database
-   */
-router
-  .route('/createProfessional')
-  .post(isAuthenticatedUser, authorizeRoles(Roles.ADMIN), createProfessional);
 
 /**
  * @openapi
@@ -109,5 +89,35 @@ router
 router
   .route('/makeOrderComplete')
   .post(isAuthenticatedUser, authorizeRoles(Roles.ADMIN), makeOrderComplete);
+
+/**
+ * @openapi
+ '/api/admin/getUsers':
+   *  get:
+   *     tags:
+   *     - Admin
+   *     summary: get all users in database
+   *     responses:
+   *      200:
+   *        description: All current pending orders
+   */
+router
+  .route('/getUsers')
+  .post(isAuthenticatedUser, authorizeRoles(Roles.ADMIN), getUsers);
+
+/**
+ * @openapi
+ '/api/admin/getProfessionals':
+   *  get:
+   *     tags:
+   *     - Admin
+   *     summary: get all professionals in database
+   *     responses:
+   *      200:
+   *        description: All current pending orders
+   */
+router
+  .route('/getProfessionals')
+  .post(isAuthenticatedUser, authorizeRoles(Roles.ADMIN), getProfessionals);
 
 export default router;

@@ -6,6 +6,7 @@ import cors from 'cors';
 import { common, professional, admin } from './routes';
 import errorHandlerMiddleware from './middleware/errorHandlerMiddleware';
 import swaggerDocs from './utils/swagger';
+import user from './routes/user';
 
 const app = express();
 
@@ -37,6 +38,7 @@ swaggerDocs(app);
 app.use('/api/professional', professional);
 app.use('/api/', common);
 app.use('/api/admin', admin);
+app.use('/api/user', user);
 
 app.use(errorHandlerMiddleware);
 

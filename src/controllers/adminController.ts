@@ -13,45 +13,6 @@ interface CustomRequest<T> extends Request {
   body: T;
 }
 
-interface ProfessionalBody {
-  username: string;
-  fullName: string;
-  email: string;
-  serviceName: string;
-  location: string;
-  phone: string;
-  password: string;
-}
-
-export const createProfessional = catchAsyncErrors(
-  async (
-    req: CustomRequest<ProfessionalBody>,
-    res: Response,
-    next: NextFunction
-  ) => {
-    const user = new UserModel({
-      fullName: req.body.fullName,
-      email: req.body.email,
-      username: req.body.username,
-      location: req.body.location,
-      phoneNo: req.body.phone,
-      role: Roles.PROFESSIONAL,
-      serviceName: req.body.serviceName.toLowerCase(),
-      password: req.body.password,
-    });
-
-    try {
-      await user.save();
-      return res.status(201).json({
-        success: true,
-        messages: 'New Professional added to database',
-      });
-    } catch (error) {
-      return next(new ErrorHander(error as string, 409));
-    }
-  }
-);
-
 interface AdminBody {
   username: string;
   fullName: string;
@@ -133,4 +94,16 @@ export const makeOrderComplete = catchAsyncErrors(
   }
 );
 
-export default createProfessional;
+export const getProfessionals = catchAsyncErrors(
+  async (req: Request, res: Response) => {
+    const professionals = await UserModel.find({ role: Roles.PROFESSIONAL });
+    return res.json({ success: true, professionals });
+  }
+);
+
+export const getUsers = catchAsyncErrors(
+  async (req: Request, res: Response) => {
+    const users = await UserModel.find({ role: Roles.USER });
+    return res.json({ success: true, users });
+  }
+);
