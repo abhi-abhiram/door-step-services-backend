@@ -17,6 +17,7 @@ interface CustomIncomingMsg extends IncomingMessage {
 const allowedOrigins = [
   'https://doorstep-services-website-liard.vercel.app/',
   'http://localhost:3000',
+  'https://door-step-services.herokuapp.com/',
 ];
 
 const corsOptions = {
