@@ -18,7 +18,7 @@ app.use(
   cors({
     origin: [
       'https://doorstep-services-website-liard.vercel.app',
-      'localhost:3000',
+      'http://localhost:3000',
     ],
     preflightContinue: true,
     credentials: true,
