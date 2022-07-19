@@ -6,6 +6,7 @@ import {
   getProfessionals,
   getUsers,
   makeOrderComplete,
+  getAdmin,
 } from '../controllers/adminController';
 import { isAuthenticatedUser, authorizeRoles } from '../middleware/auth';
 import { Roles } from '../models/userModel';
@@ -119,5 +120,20 @@ router
 router
   .route('/getProfessionals')
   .post(isAuthenticatedUser, authorizeRoles(Roles.ADMIN), getProfessionals);
+
+/**
+ * @openapi
+ '/api/admin/getAdmin':
+   *  get:
+   *     tags:
+   *     - Admin
+   *     summary: get admin
+   *     responses:
+   *      200:
+   *        description: All current pending orders
+   */
+router
+  .route('/getAdmin')
+  .post(isAuthenticatedUser, authorizeRoles(Roles.ADMIN), getAdmin);
 
 export default router;

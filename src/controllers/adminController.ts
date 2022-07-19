@@ -11,6 +11,7 @@ import ErrorHander from '../utils/errorHandler';
 
 interface CustomRequest<T> extends Request {
   body: T;
+  user?: UserObj;
 }
 
 interface AdminBody {
@@ -106,4 +107,9 @@ export const getUsers = catchAsyncErrors(
     const users = await UserModel.find({ role: Roles.USER });
     return res.json({ success: true, users });
   }
+);
+
+export const getAdmin = catchAsyncErrors(
+  async (req: CustomRequest<void>, res: Response) =>
+    res.json({ success: true, admin: req.user })
 );
