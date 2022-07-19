@@ -21,22 +21,26 @@ const sendToken = (user: UserObj, statusCode: number, res: Response) => {
     httpOnly: true,
   };
 
-  res.status(statusCode).cookie('token', token, options).json({
-    success: true,
-    user: {
-      fullName,
-      email,
-      phoneNo,
-      role,
-      createdAt,
-      address,
-      city,
-      country,
-      pinCode,
-      state,
-    },
-    token,
-  });
+  res
+    .status(statusCode)
+    .setHeader('SameSite', ['None', 'Secure'])
+    .cookie('token', token, options)
+    .json({
+      success: true,
+      user: {
+        fullName,
+        email,
+        phoneNo,
+        role,
+        createdAt,
+        address,
+        city,
+        country,
+        pinCode,
+        state,
+      },
+      token,
+    });
 };
 
 export default sendToken;
