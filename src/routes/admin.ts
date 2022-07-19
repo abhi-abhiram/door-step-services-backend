@@ -104,7 +104,7 @@ router
    */
 router
   .route('/getUsers')
-  .post(isAuthenticatedUser, authorizeRoles(Roles.ADMIN), getUsers);
+  .get(isAuthenticatedUser, authorizeRoles(Roles.ADMIN), getUsers);
 
 /**
  * @openapi
@@ -119,7 +119,7 @@ router
    */
 router
   .route('/getProfessionals')
-  .post(isAuthenticatedUser, authorizeRoles(Roles.ADMIN), getProfessionals);
+  .get(isAuthenticatedUser, authorizeRoles(Roles.ADMIN), getProfessionals);
 
 /**
  * @openapi
@@ -134,6 +134,6 @@ router
    */
 router
   .route('/getAdmin')
-  .post(isAuthenticatedUser, authorizeRoles(Roles.ADMIN), getAdmin);
+  .get(isAuthenticatedUser, authorizeRoles(Roles.ADMIN), getAdmin);
 
 export default router;
