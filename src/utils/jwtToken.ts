@@ -23,7 +23,6 @@ const sendToken = (user: UserObj, statusCode: number, res: Response) => {
 
   res
     .status(statusCode)
-    .setHeader('SameSite', ['None', 'Secure'])
     .cookie('token', token, options)
     .json({
       success: true,
@@ -40,7 +39,8 @@ const sendToken = (user: UserObj, statusCode: number, res: Response) => {
         state,
       },
       token,
-    });
+    })
+    .setHeader('SameSite', 'None');
 };
 
 export default sendToken;
