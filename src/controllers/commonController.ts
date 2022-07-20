@@ -149,7 +149,7 @@ export const createCheckout = catchAsyncErrors(
         },
       });
 
-      return res.status(303).send(session.url as string);
+      return res.status(303).redirect(session.url);
     } catch (error) {
       return next(new ErrorHander((error as { message: string }).message, 400));
     }
