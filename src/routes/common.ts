@@ -53,6 +53,9 @@ router.route('/logout').get(logout);
    *        application/json:
    *           schema:
    *              $ref: '#/components/schemas/createCheckout'
+   *     responses:
+   *      200:
+   *        description: success
    */
 router.route('/createCheckout').post(createCheckout);
 
