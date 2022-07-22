@@ -7,6 +7,7 @@ import {
   getUsers,
   makeOrderComplete,
   getAdmin,
+  getAdmins,
 } from '../controllers/adminController';
 import { isAuthenticatedUser, authorizeRoles } from '../middleware/auth';
 import { Roles } from '../models/userModel';
@@ -100,7 +101,7 @@ router
    *     summary: get all users in database
    *     responses:
    *      200:
-   *        description: All current pending orders
+   *        description: success
    */
 router
   .route('/getUsers')
@@ -115,11 +116,26 @@ router
    *     summary: get all professionals in database
    *     responses:
    *      200:
-   *        description: All current pending orders
+   *        description: success
    */
 router
   .route('/getProfessionals')
   .get(isAuthenticatedUser, authorizeRoles(Roles.ADMIN), getProfessionals);
+
+/**
+ * @openapi
+ '/api/admin/getAdmins':
+   *  get:
+   *     tags:
+   *     - Admin
+   *     summary: get all Admins in database
+   *     responses:
+   *      200:
+   *        description: success
+   */
+router
+  .route('/getAdmins')
+  .get(isAuthenticatedUser, authorizeRoles(Roles.ADMIN), getAdmins);
 
 /**
  * @openapi
@@ -130,7 +146,7 @@ router
    *     summary: get admin
    *     responses:
    *      200:
-   *        description: All current pending orders
+   *        description: success
    */
 router
   .route('/getAdmin')

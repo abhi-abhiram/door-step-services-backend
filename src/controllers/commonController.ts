@@ -94,6 +94,7 @@ interface CheckoutBody {
   city: string;
   note: string;
   serviceName: string;
+  serviceDesc: string;
 }
 
 export const createCheckout = catchAsyncErrors(
@@ -215,6 +216,8 @@ export const createOrder = catchAsyncErrors(
              <li>Email: ${order?.email}</li>
              <li>Phone: ${order?.phoneNumber}</li>
              <li>Order Date: ${order?.serviceDate}</li>
+             <li>Note: ${order?.note}</li>
+             <li>Service Description: ${order?.serviceDesc}</li>
             </ul>
         `,
             professional?.email as string

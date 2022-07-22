@@ -50,6 +50,7 @@
  *        - city
  *        - note
  *        - serviceName
+ *        - serviceDesc
  *      properties:
  *        fullName:
  *          type: string
@@ -70,6 +71,9 @@
  *           type: string
  *           default: NYC
  *        note:
+ *           type: string
+ *           default: dklfjasd;lkfjkdslj
+ *        serviceDesc:
  *           type: string
  *           default: dklfjasd;lkfjkdslj
  *        phoneNumber:

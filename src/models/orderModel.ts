@@ -32,6 +32,7 @@ interface Order {
   deliveredAt: Date;
   createdAt: Date;
   note: string;
+  serviceDesc: string;
 }
 
 export type OrderModel = Model<Order>;
@@ -94,6 +95,9 @@ const OrderSchema = new mongoose.Schema({
     default: Date.now(),
   },
   note: {
+    type: String,
+  },
+  serviceDesc: {
     type: String,
   },
   serviceId: {

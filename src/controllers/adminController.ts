@@ -109,6 +109,13 @@ export const getUsers = catchAsyncErrors(
   }
 );
 
+export const getAdmins = catchAsyncErrors(
+  async (req: Request, res: Response) => {
+    const admins = await UserModel.find({ role: Roles.ADMIN });
+    return res.json({ success: true, admins });
+  }
+);
+
 export const getAdmin = catchAsyncErrors(
   async (req: CustomRequest<void>, res: Response) =>
     res.json({ success: true, admin: req.user })
