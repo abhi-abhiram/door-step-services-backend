@@ -105,7 +105,10 @@ export const createCheckout = catchAsyncErrors(
   ) => {
     const stripe = createStripeObj();
     const Domain = process.env.CLIENT_DOMAIN;
-    const service = await serviceModel.findOne({ name: req.body.serviceName });
+
+    const service = await serviceModel.findOne({
+      name: req.body.serviceName.toLowerCase(),
+    });
 
     if (service?.id === undefined) {
       return next(new ErrorHander('Requested Service is not avaliable', 400));

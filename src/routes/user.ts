@@ -1,6 +1,11 @@
 import express from 'express';
 import { registerClient } from '../controllers/commonController';
-import { editUser, getUser } from '../controllers/userController';
+import {
+  editUser,
+  getPendingOrders,
+  getUser,
+  makeOrderComplete,
+} from '../controllers/userController';
 import { isAuthenticatedUser, authorizeRoles } from '../middleware/auth';
 import { Roles } from '../models/userModel';
 
@@ -62,5 +67,41 @@ router.route('/register').post(registerClient);
 router
   .route('/edit')
   .post(isAuthenticatedUser, authorizeRoles(Roles.USER), editUser);
+
+/**
+ * @openapi
+ '/api/user/makeOrderComplete':
+   *  post:
+   *     tags:
+   *     - User
+   *     summary: Make Order complete
+   *     requestBody:
+   *      required: true
+   *      content:
+   *        application/json:
+   *           schema:
+   *              $ref: '#/components/schemas/makeOrderComplete'
+   *     responses:
+   *      201:
+   *        description: success
+   */
+router
+  .route('/makeOrderComplete')
+  .post(isAuthenticatedUser, authorizeRoles(Roles.USER), makeOrderComplete);
+
+/**
+ * @openapi
+ '/api/user/getPendingOrders':
+   *  get:
+   *     tags:
+   *     - User
+   *     summary: Get pending orders
+   *     responses:
+   *      200:
+   *        description: All current pending orders
+   */
+router
+  .route('/getPendingOrders')
+  .get(isAuthenticatedUser, authorizeRoles(Roles.USER), getPendingOrders);
 
 export default router;

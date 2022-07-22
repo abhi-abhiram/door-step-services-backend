@@ -2,10 +2,8 @@ import express from 'express';
 import {
   createAdmin,
   createService,
-  getPendingOrders,
   getProfessionals,
   getUsers,
-  makeOrderComplete,
   getAdmin,
   getAdmins,
 } from '../controllers/adminController';
@@ -55,42 +53,6 @@ router
 router
   .route('/createService')
   .post(isAuthenticatedUser, authorizeRoles(Roles.ADMIN), createService);
-
-/**
- * @openapi
- '/api/admin/getPendingOrders':
-   *  get:
-   *     tags:
-   *     - Admin
-   *     summary: Get pending orders
-   *     responses:
-   *      200:
-   *        description: All current pending orders
-   */
-router
-  .route('/getPendingOrders')
-  .get(isAuthenticatedUser, authorizeRoles(Roles.ADMIN), getPendingOrders);
-
-/**
- * @openapi
- '/api/admin/makeOrderComplete':
-   *  post:
-   *     tags:
-   *     - Admin
-   *     summary: Make Order complete
-   *     requestBody:
-   *      required: true
-   *      content:
-   *        application/json:
-   *           schema:
-   *              $ref: '#/components/schemas/makeOrderComplete'
-   *     responses:
-   *      201:
-   *        description: success
-   */
-router
-  .route('/makeOrderComplete')
-  .post(isAuthenticatedUser, authorizeRoles(Roles.ADMIN), makeOrderComplete);
 
 /**
  * @openapi
