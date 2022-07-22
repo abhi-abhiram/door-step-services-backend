@@ -1,5 +1,6 @@
 import { Request, Response, NextFunction } from 'express';
 import catchAsyncErrors from '../middleware/catchAsyncErrors';
+import serviceModel from '../models/serviceModel';
 import UserModel, { Roles, UserObj } from '../models/userModel';
 import ErrorHander from '../utils/errorHandler';
 import sendToken from '../utils/jwtToken';
@@ -32,7 +33,19 @@ export const createProfessional = catchAsyncErrors(
     res: Response,
     next: NextFunction
   ) => {
-    console.log(req.body);
+    if (req.body.serviceName) {
+      req.body.serviceName = req.body.serviceName.toLowerCase();
+      const services = await serviceModel.find({ name: req.body.serviceName });
+      if (services.length === 0) {
+        return next(
+          new ErrorHander(
+            `${req.body.serviceName} service is not present `,
+            400
+          )
+        );
+      }
+    }
+
     const user = new UserModel({
       fullName: req.body.fullName,
       email: req.body.email,
