@@ -10,11 +10,6 @@ export enum Roles {
   ADMIN = 'admin',
 }
 
-export enum PROFESSIONALStatus {
-  NOORDERS = 'noorder',
-  ONWORK = 'onwork',
-}
-
 export interface User {
   fullName: string;
   username: string;
@@ -32,7 +27,6 @@ export interface User {
   state: string;
   country: string;
   pinCode: number;
-  professionalStatus: PROFESSIONALStatus;
 }
 
 export interface UserMethods {
@@ -106,10 +100,6 @@ const userSchema = new mongoose.Schema<User, UserModel, UserMethods>({
   },
   pinCode: {
     type: Number,
-  },
-  professionalStatus: {
-    type: String,
-    default: PROFESSIONALStatus.NOORDERS,
   },
   resetPasswordToken: String,
   resetPasswordExpire: Date,
