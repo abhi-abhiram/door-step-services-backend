@@ -20,7 +20,6 @@ interface Order {
   phoneNumber: string;
   serviceDate: Date;
   city: string;
-  professional: string;
   serviceId: string;
   paymentInfo: {
     id: string;
@@ -61,10 +60,6 @@ const OrderSchema = new mongoose.Schema({
   city: {
     type: String,
     required: [true, 'City is required'],
-  },
-  professional: {
-    type: String,
-    required: true,
   },
   paymentInfo: {
     id: {

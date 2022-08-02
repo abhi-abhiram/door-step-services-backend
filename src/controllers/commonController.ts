@@ -1,7 +1,7 @@
 import { NextFunction, Request, Response } from 'express';
 import Stripe from 'stripe';
 import catchAsyncErrors from '../middleware/catchAsyncErrors';
-import UserModel, { PROFESSIONALStatus, Roles } from '../models/userModel';
+import UserModel from '../models/userModel';
 import ErrorHander from '../utils/errorHandler';
 import sendToken from '../utils/jwtToken';
 import createStripeObj from '../utils/stripe';
@@ -122,12 +122,6 @@ export const createCheckout = catchAsyncErrors(
     };
 
     try {
-      const professional = await UserModel.findOne({
-        role: Roles.PROFESSIONAL,
-        professionalStatus: PROFESSIONALStatus.NOORDERS,
-        location: req.body.city,
-      });
-
       const order = new OrderModel({
         ...req.body,
         paymentInfo: {
@@ -137,7 +131,6 @@ export const createCheckout = catchAsyncErrors(
         totalPrice: service.price,
         orderStatus: OrderStatus.PROCESSING,
         serviceId: service.id,
-        professional: professional?.id,
       });
 
       await order.save();
@@ -198,33 +191,35 @@ export const createOrder = catchAsyncErrors(
       const order = await OrderModel.findById(
         event.data.object.metadata?.orderId
       );
-      const professional = await UserModel.findById(order?.professional);
-      if (order && professional) {
+      if (order) {
         order.paymentInfo.id = event.id;
         order.paymentInfo.status = PaymentStatus.COMPLETED;
         order.orderStatus = OrderStatus.ARRIVING;
-        professional.professionalStatus = PROFESSIONALStatus.ONWORK;
       } else {
         return null;
       }
       try {
-        await professional.save();
         await order?.save();
         if (order?.email) {
-          await sendMail(
-            `<h2>Order has placed by user ${order?.fullName}</h2> \n  
-            <ul>
-             <li>City: ${order?.city}</li>
-             <li>Address: ${order?.address}</li>
-             <li>Email: ${order?.email}</li>
-             <li>Phone: ${order?.phoneNumber}</li>
-             <li>Order Date: ${order?.serviceDate}</li>
-             <li>Note: ${order?.note}</li>
-             <li>Service Description: ${order?.serviceDesc}</li>
-            </ul>
-        `,
-            professional?.email as string
-          ).catch((error) => console.log(error));
+          const professionals = await UserModel.find({
+            location: order?.city,
+          });
+          professionals.forEach(async (value) => {
+            await sendMail(
+              `<h2>Order has placed by user ${order?.fullName}</h2> \n  
+              <ul>
+               <li>City: ${order?.city}</li>
+               <li>Address: ${order?.address}</li>
+               <li>Email: ${order?.email}</li>
+               <li>Phone: ${order?.phoneNumber}</li>
+               <li>Order Date: ${order?.serviceDate}</li>
+               <li>Note: ${order?.note}</li>
+               <li>Service Description: ${order?.serviceDesc}</li>
+              </ul>
+          `,
+              value?.email as string
+            ).catch((error) => console.log(error));
+          });
         }
       } catch (error) {
         throw new ErrorHander((error as { message: string }).message, 400);
